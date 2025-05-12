@@ -1,5 +1,60 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<Agri_Energy_Connect_Platform.Models.Product>
 @{
+    ViewData["Title"] = "My Products";
 }
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>My Products</h2>
+        <a class="btn btn-success" href="@Url.Action("AddProduct", "Farmer")">Add New Product</a>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info text-center">
+            You do not have any products yet.
+        </div>
+    }
+    else
+    {
+        <!-- Responsive table for desktop -->
+        <div class="table-responsive d-none d-md-block">
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model)
+                    {
+                        <tr>
+                            <td>@product.productName</td>
+                            <td>@product.category</td>
+                            <td>@product.description</td>
+                            <td>R @product.price</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Card view for small devices -->
+        <div class="d-md-none">
+            @foreach (var product in Model)
+            {
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.productName</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@product.category</h6>
+                        <p class="card-text">@product.description</p>
+                        <p class="card-text">R @product.price</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

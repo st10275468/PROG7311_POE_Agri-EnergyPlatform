@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Agri_Energy_Connect_Platform.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -19,16 +20,31 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+                       
+                       
+                        @if (Context.Session.GetString("UserRole") == "Employee")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Employee" asp-action="AddFarmer">Add Farmer</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Employee" asp-action="ViewAllFarmers">View All Farmers</a>
+                            </li>
+                        }
+                        @if (Context.Session.GetString("UserRole") == "Farmer")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Farmer" asp-action="ViewProducts">My Products</a>
+                            </li>
+                           
+                        }
                         <li class="nav-item">
                             @if (Context.Session.GetString("UserID") != null)
                             {
                                 <a class="nav-link " href="#" onclick="confirmLogout(event)">Logout</a>
                             }
                         </li>
-                       
+
                     </ul>
                 </div>
             </div>

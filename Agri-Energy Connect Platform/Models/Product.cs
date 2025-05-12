@@ -14,12 +14,15 @@ namespace Agri_Energy_Connect_Platform.Models
         [Required]
         public string category {  get; set; }
 
+        [Required]
         public string description { get; set; }
+
+       [Required]
+        public double price { get; set; }
 
         [ForeignKey("Farmer")]
         public int userID {  get; set; }
 
-        public User Farmer { get; set; }
-
+       
     }
 }

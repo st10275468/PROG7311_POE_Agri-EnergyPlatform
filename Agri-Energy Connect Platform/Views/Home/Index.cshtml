@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Welcome";
     var userID = Context.Session.GetString("UserID");
+    var userRole = Context.Session.GetString("UserRole");
 }
 
 <div class="container mt-5">
@@ -16,25 +17,44 @@
                         <form method="post" action="@Url.Action("Login", "Account")">
                             <div class="mb-3">
                                 <label>Email</label>
-                                <input type="email" name="Email" class="form-control" required />
+                                <input type="email" name="Email" value="Employee@gmail.com" class="form-control" required />
                             </div>
                             <div class="mb-3">
                                 <label>Password</label>
-                                <input type="password" name="Password" class="form-control" required />
+                                <input type="password" name="Password" value="password" class="form-control" required />
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Login</button>
                         </form>
                     </div>
                 </div>
             }
+            
             else
             {
-                <div class="card shadow-lg">
-                    <div class="card-body text-center">
-                        <h4>Welcome Employee These are your features</h4>
-                        <p>This area can be used for dashboard content.</p>
+                @if (userRole == "Employee")
+                {
+                    <!-- Employee's Home Page -->
+                    <div class="card shadow-lg">
+                        <div class="card-body text-center">
+                            <h4>Welcome, as an employee you can...</h4>
+                            <p>This area can be used for dashboard content.</p>
+                            <!-- Add links for employee features -->
+                            <a href="@Url.Action("AddFarmer", "Employee")" class="btn btn-primary">Add a Farmer</a>
+                        </div>
                     </div>
-                </div>
+                }
+                else if (userRole == "Farmer")
+                {
+                    <!-- Farmer's Home Page -->
+                    <div class="card shadow-lg">
+                        <div class="card-body text-center">
+                            <h4>Welcome, as a farmer yoyu can</h4>
+                            <p>This area can be used for farmer-specific content.</p>
+                            <!-- Add links for farmer features -->
+                            <a href="@Url.Action("AddProduct", "Farmer")" class="btn btn-primary">Add a Product</a>
+                        </div>
+                    </div>
+                }
             }
         </div>
     </div>
