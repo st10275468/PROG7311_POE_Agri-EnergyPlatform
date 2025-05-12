@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Agri_Energy_Connect_Platform.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250511142253_InitialCreate")]
+    [Migration("20250512091121_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -89,6 +89,18 @@ namespace Agri_Energy_Connect_Platform.Migrations
                     b.HasKey("userID");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            userID = 1,
+                            email = "Employee@gmail.com",
+                            name = "Employee",
+                            password = "password",
+                            phoneNumber = "1231231234",
+                            role = "Employee",
+                            surname = "1"
+                        });
                 });
 
             modelBuilder.Entity("Agri_Energy_Connect_Platform.Models.Product", b =>

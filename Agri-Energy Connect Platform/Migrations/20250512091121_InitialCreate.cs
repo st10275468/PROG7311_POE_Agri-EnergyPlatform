@@ -50,6 +50,11 @@ namespace Agri_Energy_Connect_Platform.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "userID", "email", "name", "password", "phoneNumber", "role", "surname" },
+                values: new object[] { 1, "Employee@gmail.com", "Employee", "password", "1231231234", "Employee", "1" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Products_userID",
                 table: "Products",

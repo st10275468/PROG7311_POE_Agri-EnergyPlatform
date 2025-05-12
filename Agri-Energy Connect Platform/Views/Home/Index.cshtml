@@ -1,85 +1,41 @@
 ﻿@{
     ViewData["Title"] = "Welcome";
+    var userID = Context.Session.GetString("UserID");
 }
 
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <h1 class="text-center mb-4" id="formTitle">Welcome to the Agri-Energy Connnect Platform</h1>
+        <h1 class="text-center mb-4">Agri-Energy Connect Platform</h1>
         <div class="col-md-6 col-sm-12">
-            <div class="card shadow-lg">
-                <div class="card-body">
-                    <h3 class="text-center mb-4" id="formTitle">Login</h3>
 
-                    <!-- Form to login -->
-                    <form id="loginForm" asp-controller="Account" asp-action="Login" method="post">
-                        <div class="mb-3">
-                            <label>Email</label>
-                            <input type="email" name="Email" class="form-control" required />
-                        </div>
-                        <div class="mb-3">
-                            <label>Password</label>
-                            <input type="password" name="Password" class="form-control" required />
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
-                        <p class="text-center mt-3">
-                            Don't have an account? <a href="#" id="showRegister">Create one</a>
-                        </p>
-                    </form>
-
-                    <!-- Form for creating an account -->
-                    <form id="registerForm" asp-controller="Account" asp-action="Register" method="post" style="display:none;">
-                        <div class="mb-3">
-                            <label>Name</label>
-                            <input type="text" name="Name" class="form-control" required />
-                        </div>
-                        <div class="mb-3">
-                            <label>Surname</label>
-                            <input type="text" name="Surname" class="form-control" required />
-                        </div>
-                        <div class="mb-3">
-                            <label>Email</label>
-                            <input type="email" name="Email" class="form-control" required />
-                        </div>
-                        <div class="mb-3">
-                            <label>Password</label>
-                            <input type="password" name="Password" class="form-control" required />
-                        </div>
-                        <div class="mb-3">
-                            <label>Phone Number</label>
-                            <input type="text" name="PhoneNumber" class="form-control" required />
-                        </div>
-                        <div class="mb-3">
-                            <label>Role</label>
-                            <select name="Role" class="form-control" required>
-                                <option value="Farmer">Farmer</option>
-                                <option value="Employee">Employee</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-success w-100">Create Account</button>
-                        <p class="text-center mt-3">
-                            Already have an account? <a href="#" id="showLogin">Login</a>
-                        </p>
-                    </form>
+            @if (string.IsNullOrEmpty(userID))
+            {
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h3 class="text-center mb-4">Login</h3>
+                        <form method="post" action="@Url.Action("Login", "Account")">
+                            <div class="mb-3">
+                                <label>Email</label>
+                                <input type="email" name="Email" class="form-control" required />
+                            </div>
+                            <div class="mb-3">
+                                <label>Password</label>
+                                <input type="password" name="Password" class="form-control" required />
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Login</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <div class="card shadow-lg">
+                    <div class="card-body text-center">
+                        <h4>Welcome Employee These are your features</h4>
+                        <p>This area can be used for dashboard content.</p>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>
-
-@section Scripts {
-    <script>
-        document.getElementById("showRegister").addEventListener("click", function (e) {
-            e.preventDefault();
-            document.getElementById("loginForm").style.display = "none";
-            document.getElementById("registerForm").style.display = "block";
-            document.getElementById("formTitle").textContent = "Create Account";
-        });
-
-        document.getElementById("showLogin").addEventListener("click", function (e) {
-            e.preventDefault();
-            document.getElementById("registerForm").style.display = "none";
-            document.getElementById("loginForm").style.display = "block";
-            document.getElementById("formTitle").textContent = "Login";
-        });
-    </script>
-}
