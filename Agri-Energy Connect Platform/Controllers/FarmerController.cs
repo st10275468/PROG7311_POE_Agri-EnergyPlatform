@@ -29,6 +29,17 @@ namespace Agri_Energy_Connect_Platform.Controllers
             return View(products);
         }
 
+        public IActionResult ProductDetails(int id)
+        {
+            var product = _context.Products.FirstOrDefault(p => p.productID == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
+
         [HttpGet]
         public IActionResult AddProduct()
         {

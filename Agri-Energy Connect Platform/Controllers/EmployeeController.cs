@@ -33,31 +33,32 @@ namespace Agri_Energy_Connect_Platform.Controllers
         }*/
 
 
-        public IActionResult ViewFarmerProducts(string  filterType, string filterValue) {
+        public IActionResult ViewFarmerProducts(string  filterType, string filterValue, DateTime? startDate, DateTime? endDate) {
+
 
             var productsQuery = _context.Products
-                .Join(_context.Users,
-                p => p.userID,
-                u => u.userID,
-                (p, u) => new { Product = p, Farmer = u })
-                .AsQueryable();
-
+                 .Include(p => p.Farmer) 
+                 .AsQueryable();
 
             if (!string.IsNullOrEmpty(filterType) && !string.IsNullOrEmpty(filterValue))
             {
                 if (filterType == "Category")
                 {
-                    // Filter by category
-                    productsQuery = productsQuery.Where(p => p.Product.category.ToLower().Contains(filterValue.ToLower()));
+                    productsQuery = productsQuery
+                        .Where(p => p.category.ToLower().Contains(filterValue.ToLower()));
                 }
                 else if (filterType == "Farmer")
                 {
-                    // Filter by farmer (User) using name or surname
-                    productsQuery = productsQuery.Where(p =>
-                        (p.Farmer.name + " " + p.Farmer.surname).ToLower().Contains(filterValue.ToLower()));
+                    productsQuery = productsQuery
+                        .Where(p => (p.Farmer.name + " " + p.Farmer.surname).ToLower().Contains(filterValue.ToLower()));
                 }
             }
-            var products = productsQuery.Select(p => p.Product).ToList();
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                productsQuery = productsQuery
+                    .Where(p => p.CreatedDate >= startDate && p.CreatedDate <= endDate);
+            }
+            var products = productsQuery.ToList();
 
             return View(products);
 
@@ -82,5 +83,16 @@ namespace Agri_Energy_Connect_Platform.Controllers
 
             return View(user);
         }
+
+        public IActionResult ProductDetails(int id)
+        {
+            var product = _context.Products.Include(p => p.Farmer).FirstOrDefault(p => p.productID == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
     }
 }

@@ -27,7 +27,8 @@ namespace Agri_Energy_Connect_Platform.Models
         [ForeignKey("Farmer")]
         public int userID {  get; set; }
 
+        public User Farmer { get; set; }
 
-       
+
     }
 }

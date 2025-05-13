@@ -12,16 +12,29 @@
         <div class="col-md-6 col-sm-12">
             <form method="get" action="@Url.Action("ViewFarmerProducts", "Employee")">
                 <div class="form-row">
+                    <!-- Filter Type Selector -->
                     <div class="col">
-                        <select class="form-control" name="filterType" required>
+                        <select class="form-control" name="filterType" id="filterType" required>
                             <option value="" disabled selected>Filter By...</option>
                             <option value="Category">Category</option>
                             <option value="Farmer">Farmer</option>
+                            <option value="DateRange">Date Range</option>
                         </select>
                     </div>
-                    <div class="col">
-                        <input type="text" class="form-control" name="filterValue" placeholder="Enter filter value" required />
+
+                    <!-- Filter Value Input (for Category and Farmer) -->
+                    <div class="col" id="filterValueDiv" style="display: none;">
+                        <input type="text" class="form-control" name="filterValue" id="filterValue" placeholder="Enter filter value" />
                     </div>
+
+                    <!-- Date Range Inputs -->
+                    <div class="col" id="dateRangeDiv" style="display: none;">
+                        <input type="date" class="form-control" name="startDate" id="startDate" />
+                    </div>
+                    <div class="col" id="dateRangeEndDiv" style="display: none;">
+                        <input type="date" class="form-control" name="endDate" id="endDate" />
+                    </div>
+
                     <div class="col">
                         <button type="submit" class="btn btn-primary w-100">Apply Filter</button>
                     </div>
@@ -36,14 +49,32 @@
         <div class="row">
             @foreach (var product in Model)
             {
-                <div class="col-md-4 col-sm-12 mb-4">
-                    <div class="card shadow-lg">
+                <div class="col-md-4 col-sm-12 mb-4 d-flex">
+                    <div class="card shadow product-card w-100">
                         <div class="card-body">
                             <h5 class="card-title">@product.productName</h5>
                             <p><strong>Category:</strong> @product.category</p>
                             <p><strong>Description:</strong> @product.description</p>
                             <p><strong>Price:</strong> R @product.price.ToString("F2")</p>
-                            <p><strong>Farmer:</strong> @product.userID</p> <!-- Replace with farmer's name after matching -->
+                            <p><strong>Farmer:</strong> @product.Farmer?.name @product.Farmer?.surname</p>
+                            <p><strong>Upload Date:</strong> @product.CreatedDate?.ToString("yyyy-MM-dd")</p>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(product.ImageUrl))
+                        {
+                            <img src="@product.ImageUrl" class="product-image" alt="Product Image" />
+                        }
+                        else
+                        {
+                            <div class="text-center text-muted mb-2">
+                                <small>No image available</small>
+                            </div>
+                        }
+
+                        <div class="card-footer bg-transparent border-top-0">
+                            <a class="btn btn-sm btn-primary w-100" href="@Url.Action("ProductDetails", "Employee", new { id = product.productID })">
+                                Expand Product
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -57,3 +88,25 @@
         </div>
     }
 </div>
+
+@section Scripts {
+    <script>
+        // Show the relevant filter field based on the selected filter type
+        document.getElementById('filterType').addEventListener('change', function () {
+            var filterType = this.value;
+
+            // Hide all filter fields first
+            document.getElementById('filterValueDiv').style.display = 'none';
+            document.getElementById('dateRangeDiv').style.display = 'none';
+            document.getElementById('dateRangeEndDiv').style.display = 'none';
+
+            // Show the appropriate field based on the selected filter type
+            if (filterType === 'Category' || filterType === 'Farmer') {
+                document.getElementById('filterValueDiv').style.display = 'block';
+            } else if (filterType === 'DateRange') {
+                document.getElementById('dateRangeDiv').style.display = 'block';
+                document.getElementById('dateRangeEndDiv').style.display = 'block';
+            }
+        });
+    </script>
+}
