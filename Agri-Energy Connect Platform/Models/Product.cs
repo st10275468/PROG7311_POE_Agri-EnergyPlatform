@@ -20,8 +20,13 @@ namespace Agri_Energy_Connect_Platform.Models
        [Required]
         public double price { get; set; }
 
+        public DateTime? CreatedDate { get; set; }
+
+        public string? ImageUrl { get; set; }
+
         [ForeignKey("Farmer")]
         public int userID {  get; set; }
+
 
        
     }

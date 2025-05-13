@@ -42,7 +42,7 @@ namespace Agri_Energy_Connect_Platform.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddProduct(Product product)
+        public async Task<IActionResult> AddProduct(Product product, IFormFile? productImage)
         {
             var farmerID = HttpContext.Session.GetString("UserID");
 
@@ -52,9 +52,27 @@ namespace Agri_Energy_Connect_Platform.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
+            product.CreatedDate = DateTime.UtcNow;
+
             if (ModelState.IsValid)
             {
                 product.userID = int.Parse(farmerID);
+                
+
+                if (productImage != null && productImage.Length > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(productImage.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "products", fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await productImage.CopyToAsync(stream);
+                    }
+
+                    product.ImageUrl = "/images/products/" + fileName;
+
+                }
+
                 _context.Products.Add(product);
                 _context.SaveChanges();
                 return RedirectToAction("ViewProducts");

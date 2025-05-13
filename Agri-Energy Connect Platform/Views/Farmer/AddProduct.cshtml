@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <h3 class="text-center mb-4">Add New Product</h3>
 
-                    <form method="post" asp-action="AddProduct" asp-controller="Farmer">
+                    <form method="post" asp-action="AddProduct" asp-controller="Farmer" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label asp-for="productName" class="form-label"></label>
                             <input asp-for="productName" class="form-control" />
@@ -35,7 +35,10 @@
                             <input asp-for="price" class="form-control" step="0.01" />
                             <span asp-validation-for="price" class="text-danger"></span>
                         </div>
-
+                        <div class="mb-3">
+                            <label for="ProductImage" class="form-label">Product Image (optional)</label>
+                            <input type="file" class="form-control" name="productImage" accept="image/*" />
+                        </div>
                         <button type="submit" class="btn btn-success w-100">Add Product</button>
                     </form>
                 </div>

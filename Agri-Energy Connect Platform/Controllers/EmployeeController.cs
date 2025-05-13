@@ -3,6 +3,8 @@ using Agri_Energy_Connect_Platform.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using System.Linq;
+using System.Globalization;
 
 namespace Agri_Energy_Connect_Platform.Controllers
 {
@@ -24,10 +26,43 @@ namespace Agri_Energy_Connect_Platform.Controllers
             return View();
         }
 
-        public IActionResult ViewFarmerProducts()
+        /*public IActionResult ViewFarmerProducts()
         {
-            return View();
+            var products = _context.Products.ToList();
+            return View(products);
+        }*/
+
+
+        public IActionResult ViewFarmerProducts(string  filterType, string filterValue) {
+
+            var productsQuery = _context.Products
+                .Join(_context.Users,
+                p => p.userID,
+                u => u.userID,
+                (p, u) => new { Product = p, Farmer = u })
+                .AsQueryable();
+
+
+            if (!string.IsNullOrEmpty(filterType) && !string.IsNullOrEmpty(filterValue))
+            {
+                if (filterType == "Category")
+                {
+                    // Filter by category
+                    productsQuery = productsQuery.Where(p => p.Product.category.ToLower().Contains(filterValue.ToLower()));
+                }
+                else if (filterType == "Farmer")
+                {
+                    // Filter by farmer (User) using name or surname
+                    productsQuery = productsQuery.Where(p =>
+                        (p.Farmer.name + " " + p.Farmer.surname).ToLower().Contains(filterValue.ToLower()));
+                }
+            }
+            var products = productsQuery.Select(p => p.Product).ToList();
+
+            return View(products);
+
         }
+
 
         [HttpPost]
         public IActionResult AddFarmer(User user)
