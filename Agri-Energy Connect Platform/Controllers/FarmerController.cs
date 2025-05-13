@@ -45,9 +45,13 @@ namespace Agri_Energy_Connect_Platform.Controllers
         {
             var farmerID = HttpContext.Session.GetString("UserID");
 
+
             if (string.IsNullOrEmpty(farmerID)){
                 return RedirectToAction("Login", "Account");
             }
+
+
+
 
             return View();
         }

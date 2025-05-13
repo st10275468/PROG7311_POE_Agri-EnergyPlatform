@@ -20,9 +20,18 @@
 
                         <div class="mb-3">
                             <label asp-for="category" class="form-label"></label>
-                            <input asp-for="category" class="form-control" />
+                            <select asp-for="category" class="form-control">
+                                <option value="" selected disabled>Select a Category</option>
+                                <option value="Solar Solutions">Solar Solutions</option>
+                                <option value="Wind Energy">Wind Energy</option>
+                                <option value="Biogas">Biogas</option>
+                                <option value="Water Conservation">Water Conservation</option>
+                                <option value="Organic Farming">Organic Farming</option>
+                                <option value="Sustainable Equipment">Sustainable Equipment</option>
+                            </select>
                             <span asp-validation-for="category" class="text-danger"></span>
                         </div>
+
 
                         <div class="mb-3">
                             <label asp-for="description" class="form-label"></label>

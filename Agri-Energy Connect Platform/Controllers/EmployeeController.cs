@@ -40,6 +40,8 @@ namespace Agri_Energy_Connect_Platform.Controllers
                  .Include(p => p.Farmer) 
                  .AsQueryable();
 
+        
+
             if (!string.IsNullOrEmpty(filterType) && !string.IsNullOrEmpty(filterValue))
             {
                 if (filterType == "Category")
@@ -59,6 +61,14 @@ namespace Agri_Energy_Connect_Platform.Controllers
                     .Where(p => p.CreatedDate >= startDate && p.CreatedDate <= endDate);
             }
             var products = productsQuery.ToList();
+
+            var categories = new List<string>
+            {
+            "Green Energy", "Organic", "Sustainable", "Local", "Fresh"
+            };
+
+            ViewBag.Categories = categories;
+
 
             return View(products);
 

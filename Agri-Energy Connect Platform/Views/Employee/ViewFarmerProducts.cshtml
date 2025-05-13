@@ -22,7 +22,17 @@
                         </select>
                     </div>
 
-                    <!-- Filter Value Input (for Category and Farmer) -->
+                    <div class="col" id="categoryDiv" style="display: none;">
+                        <select class="form-control" name="filterValue" id="filterValue">
+                            <option value="" disabled selected>Select Category</option>
+                            @foreach (var category in ViewBag.Categories as List<string>)
+                            {
+                                <option value="@category">@category</option>
+                            }
+                        </select>
+                    </div>
+
+                    <!-- Filter Value Input (for Farmer) -->
                     <div class="col" id="filterValueDiv" style="display: none;">
                         <input type="text" class="form-control" name="filterValue" id="filterValue" placeholder="Enter filter value" />
                     </div>
@@ -96,12 +106,15 @@
             var filterType = this.value;
 
             // Hide all filter fields first
+            document.getElementById('categoryDiv').style.display = 'none';
             document.getElementById('filterValueDiv').style.display = 'none';
             document.getElementById('dateRangeDiv').style.display = 'none';
             document.getElementById('dateRangeEndDiv').style.display = 'none';
 
             // Show the appropriate field based on the selected filter type
-            if (filterType === 'Category' || filterType === 'Farmer') {
+            if (filterType === 'Category') {
+                document.getElementById('categoryDiv').style.display = 'block';
+            } else if (filterType === 'Farmer') {
                 document.getElementById('filterValueDiv').style.display = 'block';
             } else if (filterType === 'DateRange') {
                 document.getElementById('dateRangeDiv').style.display = 'block';
