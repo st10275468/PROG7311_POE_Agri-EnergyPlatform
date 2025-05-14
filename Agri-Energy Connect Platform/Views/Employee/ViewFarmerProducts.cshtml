@@ -7,49 +7,67 @@
 <div class="container mt-5">
     <h1 class="text-center mb-4">Farmer's Products</h1>
 
-    <!-- Filter Form -->
+    <!-- Filter Card -->
     <div class="row justify-content-center mb-4">
-        <div class="col-md-6 col-sm-12">
-            <form method="get" action="@Url.Action("ViewFarmerProducts", "Employee")">
-                <div class="form-row">
-                    <!-- Filter Type Selector -->
-                    <div class="col">
-                        <select class="form-control" name="filterType" id="filterType" required>
-                            <option value="" disabled selected>Filter By...</option>
-                            <option value="Category">Category</option>
-                            <option value="Farmer">Farmer</option>
-                            <option value="DateRange">Date Range</option>
-                        </select>
-                    </div>
+        <div class="col-md-8 col-sm-12">
+            <div class="card p-4 shadow-sm">
+                <div class="card-body">
+                    <form method="get" action="@Url.Action("ViewFarmerProducts", "Employee")">
+                        <div class="form-row row g-3">
+                            <!-- First Filter Dropdown -->
+                            <div class="col-md-4">
+                                <select class="form-control" name="filterType" id="filterType" required>
+                                    <option value="" disabled selected>Filter By...</option>
+                                    <option value="Category">Category</option>
+                                    <option value="Farmer">Farmer</option>
+                                    <option value="DateRange">Date Range</option>
+                                </select>
+                            </div>
 
-                    <div class="col" id="categoryDiv" style="display: none;">
-                        <select class="form-control" name="filterValue" id="filterValue">
-                            <option value="" disabled selected>Select Category</option>
-                            @foreach (var category in ViewBag.Categories as List<string>)
-                            {
-                                <option value="@category">@category</option>
-                            }
-                        </select>
-                    </div>
+                           
 
-                    <!-- Filter Value Input (for Farmer) -->
-                    <div class="col" id="filterValueDiv" style="display: none;">
-                        <input type="text" class="form-control" name="filterValue" id="filterValue" placeholder="Enter filter value" />
-                    </div>
+                            <!-- Farmer Filter (Hidden by default) -->
+                            <div class="col-md-4" id="farmerDiv" style="display: none;">
+                                <select class="form-control" name="filterValue" id="farmerSelect">
+                                    <option value="" disabled selected>Select Farmer</option>
+                                    @foreach (var farmer in ViewBag.Farmers)
+                                    {
+                                        <option value="@farmer.userID">@farmer.FullName</option>
+                                    }
+                                </select>
+                            </div>
 
-                    <!-- Date Range Inputs -->
-                    <div class="col" id="dateRangeDiv" style="display: none;">
-                        <input type="date" class="form-control" name="startDate" id="startDate" />
-                    </div>
-                    <div class="col" id="dateRangeEndDiv" style="display: none;">
-                        <input type="date" class="form-control" name="endDate" id="endDate" />
-                    </div>
+                            <!-- Category Filter (Hidden by default) -->
+                            <div class="col-md-4" id="categoryDiv" style="display: none;">
+                                <select class="form-control" name="category" id="categorySelect">
+                                    <option value="" disabled selected>Select Category</option>
+                                    @foreach (var category in ViewBag.Categories as List<string>)
+                                    {
+                                        <option value="@category">@category</option>
+                                    }
+                                </select>
+                            </div>
 
-                    <div class="col">
-                        <button type="submit" class="btn btn-primary w-100">Apply Filter</button>
-                    </div>
+                            <!-- Date Range Filters (Hidden by default) -->
+                            <div class="col-md-4" id="dateRangeDiv" style="display: none;">
+                                <input type="date" class="form-control" name="startDate" />
+                            </div>
+                            <div class="col-md-4" id="dateRangeEndDiv" style="display: none;">
+                                <input type="date" class="form-control" name="endDate" />
+                            </div>
+
+                        </div>
+                        <!-- Action Buttons Underneath the First Filter Dropdown -->
+                        <div class="col-md-4 mt-3">
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary w-50">Apply Filter</button>
+                                <a href="@Url.Action("ViewFarmerProducts", "Employee")" class="btn btn-secondary w-50">Clear Filters</a>
+                            </div>
+                        </div>
+
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 
@@ -101,21 +119,22 @@
 
 @section Scripts {
     <script>
-        // Show the relevant filter field based on the selected filter type
         document.getElementById('filterType').addEventListener('change', function () {
             var filterType = this.value;
 
-            // Hide all filter fields first
+            // Reset visibility
+            document.getElementById('farmerDiv').style.display = 'none';
             document.getElementById('categoryDiv').style.display = 'none';
-            document.getElementById('filterValueDiv').style.display = 'none';
             document.getElementById('dateRangeDiv').style.display = 'none';
             document.getElementById('dateRangeEndDiv').style.display = 'none';
 
-            // Show the appropriate field based on the selected filter type
-            if (filterType === 'Category') {
+            if (filterType === 'Farmer') {
+                document.getElementById('farmerDiv').style.display = 'block';
                 document.getElementById('categoryDiv').style.display = 'block';
-            } else if (filterType === 'Farmer') {
-                document.getElementById('filterValueDiv').style.display = 'block';
+                document.getElementById('dateRangeDiv').style.display = 'block';
+                document.getElementById('dateRangeEndDiv').style.display = 'block';
+            } else if (filterType === 'Category') {
+                document.getElementById('categoryDiv').style.display = 'block';
             } else if (filterType === 'DateRange') {
                 document.getElementById('dateRangeDiv').style.display = 'block';
                 document.getElementById('dateRangeEndDiv').style.display = 'block';

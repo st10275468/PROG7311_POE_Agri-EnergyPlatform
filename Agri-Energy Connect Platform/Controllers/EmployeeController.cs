@@ -33,45 +33,54 @@ namespace Agri_Energy_Connect_Platform.Controllers
         }*/
 
 
-        public IActionResult ViewFarmerProducts(string  filterType, string filterValue, DateTime? startDate, DateTime? endDate) {
+        public IActionResult ViewFarmerProducts(string filterType, string filterValue, string category, DateTime? startDate, DateTime? endDate)
+        {
+            var productsQuery = _context.Products.Include(p => p.Farmer).AsQueryable();
 
-
-            var productsQuery = _context.Products
-                 .Include(p => p.Farmer) 
-                 .AsQueryable();
-
-        
-
-            if (!string.IsNullOrEmpty(filterType) && !string.IsNullOrEmpty(filterValue))
-            {
-                if (filterType == "Category")
+            var farmers = _context.Users
+                .Where(u => u.role == "Farmer")
+                .Select(f => new
                 {
-                    productsQuery = productsQuery
-                        .Where(p => p.category.ToLower().Contains(filterValue.ToLower()));
-                }
-                else if (filterType == "Farmer")
-                {
-                    productsQuery = productsQuery
-                        .Where(p => (p.Farmer.name + " " + p.Farmer.surname).ToLower().Contains(filterValue.ToLower()));
-                }
-            }
-            if (startDate.HasValue && endDate.HasValue)
-            {
-                productsQuery = productsQuery
-                    .Where(p => p.CreatedDate >= startDate && p.CreatedDate <= endDate);
-            }
-            var products = productsQuery.ToList();
+                    f.userID,
+                    FullName = f.name + " " + f.surname
+                })
+                .ToList();
+
+            ViewBag.Farmers = farmers;
 
             var categories = new List<string>
-            {
-            "Green Energy", "Organic", "Sustainable", "Local", "Fresh"
-            };
-
+    {
+        "Green Energy", "Organic", "Sustainable", "Local", "Fresh"
+    };
             ViewBag.Categories = categories;
 
+            if (filterType == "Farmer" && int.TryParse(filterValue, out int selectedFarmerID))
+            {
+                productsQuery = productsQuery.Where(p => p.userID == selectedFarmerID);
+
+                // Optional secondary filters
+                if (!string.IsNullOrWhiteSpace(category))
+                {
+                    productsQuery = productsQuery.Where(p => p.category.ToLower().Contains(category.ToLower()));
+                }
+
+                if (startDate.HasValue && endDate.HasValue)
+                {
+                    productsQuery = productsQuery.Where(p => p.CreatedDate >= startDate && p.CreatedDate <= endDate);
+                }
+            }
+            else if (filterType == "Category" && !string.IsNullOrEmpty(category))
+            {
+                productsQuery = productsQuery.Where(p => p.category.ToLower().Contains(category.ToLower()));
+            }
+            else if (filterType == "DateRange" && startDate.HasValue && endDate.HasValue)
+            {
+                productsQuery = productsQuery.Where(p => p.CreatedDate >= startDate && p.CreatedDate <= endDate);
+            }
+
+            var products = productsQuery.ToList();
 
             return View(products);
-
         }
 
 

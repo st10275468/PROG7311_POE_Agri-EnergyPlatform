@@ -13,12 +13,21 @@ html {
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
+}
+
+html, body {
+    height: 100%;
+    color: White;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background: linear-gradient(rgba(0, 44, 56, 0.8), rgba(0, 44, 56, 0.1)), url('/images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    
+    color: white !important;
 }
 .product-card {
     height: 100%;
@@ -34,4 +43,52 @@ body {
     object-fit: contain; /* Ensure image doesn't get cut off */
     border-bottom-left-radius: .25rem;
     border-bottom-right-radius: .25rem;
+}
+.container {
+    background-color: transparent !important;
+}
+.card {
+    background-color: #e0f2f1 !important; /* Set background color to black */
+    color: #003135 !important; /* Set text color to white */
+    border: 0px;
+    margin-top: 20px;
+    box-shadow: 0 8px 16px black !important; /* Optional: keep the shadow effect */
+}
+
+.custom-navbar {
+    background-color: #003135 !important; /* Set your custom background color */
+    color: #ffffff !important; /* Set text color */
+    border-bottom: none !important; /* Remove the bottom border */
+    box-shadow: none !important; /* Remove shadow */
+    font-size:15px;
+}
+
+    .custom-navbar .navbar-brand,
+    .custom-navbar .nav-link {
+        color: white !important; /* Make links white */
+    }
+
+        .custom-navbar .nav-link:hover {
+            color: white !important; /* Optional: lighter hover color */
+        }
+
+.btn {
+    background-color: #1abc9c !important;
+    color: white !important;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 18px;
+    font-weight: 600;
+    box-shadow: 0 4px 0 #138d75;
+    transition: 0.2s ease-in-out;
+}
+
+    .btn:hover {
+        background-color: #138d75;
+        transform: translateY(-1px);
+    }
+
+h1 {
+   
+    font-size: 50px !important;
 }

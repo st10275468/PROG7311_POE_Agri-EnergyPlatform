@@ -66,13 +66,20 @@ namespace Agri_Energy_Connect_Platform.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
+            // product.CreatedDate = DateTime.UtcNow;
 
-            product.CreatedDate = DateTime.UtcNow;
-
+            var farmer = await _context.Users.FindAsync(int.Parse(farmerID));
+            if (farmer == null)
+            {
+                // Handle the case where the farmer is not found
+                return RedirectToAction("Login", "Account");
+            }
             if (ModelState.IsValid)
             {
+
+              
                 product.userID = int.Parse(farmerID);
-                
+               
 
                 if (productImage != null && productImage.Length > 0)
                 {
@@ -89,7 +96,7 @@ namespace Agri_Energy_Connect_Platform.Controllers
                 }
 
                 _context.Products.Add(product);
-                _context.SaveChanges();
+               await _context.SaveChangesAsync();
                 return RedirectToAction("ViewProducts");
 
             }
