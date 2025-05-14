@@ -6,17 +6,14 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h3 class="mb-4 text-center">@Model.productName</h3>
-
                     <p class="mb-3"><strong>Category:</strong> @Model.category</p>
                     <p class="mb-3"><strong>Price:</strong> R @Model.price.ToString("F2")</p>
                     <p class="mb-3"><strong>Description:</strong> @Model.description</p>
-                    <p class="mb-3"><strong>Date Listed:</strong> @Model.CreatedDate?.ToString("yyyy-MM-dd")</p>
-
+                    <p class="mb-3"><strong>Production Date:</strong> @Model.CreatedDate?.ToString("yyyy-MM-dd")</p>
                     <p class="mb-3">
                         <strong>Farmer:</strong>
                         @Model.Farmer?.name @Model.Farmer?.surname
                     </p>
-
                     @if (!string.IsNullOrEmpty(Model.ImageUrl))
                     {
                         <div class="text-center mt-4">
@@ -30,9 +27,10 @@
                 </div>
 
                 <div class="card-footer text-left" style="padding-top:10px">
-                    <button class="btn btn-secondary" onclick="window.history.back()">Back</button>
+                    <button class="btn" onclick="window.history.back()">Back</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!--OpenAI.2024. Chat-GPT(Version 3.5).[Large language model]. Available at: https://chat.openai.com/[Accessed: 13 May 2025]. -->

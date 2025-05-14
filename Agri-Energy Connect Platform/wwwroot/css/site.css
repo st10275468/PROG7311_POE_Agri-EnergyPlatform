@@ -39,8 +39,8 @@ body {
 
 .product-image {
     width: 100%;
-    height: 150px; /* Fixed size for the image */
-    object-fit: contain; /* Ensure image doesn't get cut off */
+    height: 150px;
+    object-fit: contain;
     border-bottom-left-radius: .25rem;
     border-bottom-right-radius: .25rem;
 }
@@ -48,28 +48,28 @@ body {
     background-color: transparent !important;
 }
 .card {
-    background-color: #e0f2f1 !important; /* Set background color to black */
-    color: #003135 !important; /* Set text color to white */
+    background-color: #e0f2f1 !important;
+    color: #003135 !important;
     border: 0px;
-    margin-top: 20px;
-    box-shadow: 0 8px 16px black !important; /* Optional: keep the shadow effect */
+    margin-top: 10px;
+    box-shadow: 0 8px 16px black !important;
 }
 
 .custom-navbar {
-    background-color: #003135 !important; /* Set your custom background color */
-    color: #ffffff !important; /* Set text color */
-    border-bottom: none !important; /* Remove the bottom border */
-    box-shadow: none !important; /* Remove shadow */
+    background-color: #003135 !important;
+    color: #ffffff !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
     font-size:15px;
 }
 
     .custom-navbar .navbar-brand,
     .custom-navbar .nav-link {
-        color: white !important; /* Make links white */
+        color: white !important;
     }
 
         .custom-navbar .nav-link:hover {
-            color: white !important; /* Optional: lighter hover color */
+            color: white !important;
         }
 
 .btn {
@@ -91,4 +91,58 @@ body {
 h1 {
    
     font-size: 50px !important;
+    margin-top: -20px !important;
 }
+.form-wrapper {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.scrollable-card-body {
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 1.5rem;
+}
+
+.card {
+    border-radius: 12px;
+}
+
+.card-body h3 {
+    font-size: 1.75rem;
+}
+
+textarea.form-control {
+    resize: none;
+}
+.form-control {
+    background-color: #ffffff; 
+    border: 1px solid Black !important;
+    color: black;
+    border-radius: 6px;
+    padding: 10px;
+    font-weight: 500;
+    box-shadow: none;
+    transition: border-color 0.1s ease-in-out;
+}
+
+    .form-control:focus {
+        border-color: #1abc9c;
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(26, 188, 156, 0.25);
+    }
+textarea.form-control {
+    resize: none;
+}
+
+select.form-control {
+    appearance: none; 
+    background-color: #ffffff;
+}
+.login-card-wrapper {
+    max-width: 380px;
+    margin: 0 auto;
+}
+
+
+    

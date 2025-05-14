@@ -25,7 +25,6 @@ namespace Agri_Energy_Connect_Platform.Models
         [Required]
         public string role {  get; set; }
 
-        
         public ICollection<Product> farmerProducts { get; set; } = new List<Product>();
     }
 }

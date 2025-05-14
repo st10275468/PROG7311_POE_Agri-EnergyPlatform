@@ -4,51 +4,63 @@
     ViewData["Title"] = "Add Farmer";
 }
 
-<h2 class="mt-3 mb-4 text-center">Create Farmer Profile</h2>
+<div class="container mt-5">
+    <div class="form-wrapper">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h3 class="text-center mb-4">Create Farmer Profile</h3>
+                @if (ViewBag.SuccessMessage != null)
+                {
+                    <div class="alert alert-success text-center">
+                        @ViewBag.SuccessMessage
+                    </div>
+                }
+                <form asp-action="AddFarmer" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="name" class="form-label">First Name</label>
+                            <input asp-for="name" class="form-control" />
+                            <span asp-validation-for="name" class="text-danger"></span>
+                        </div>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-sm-10">
-            <form asp-action="AddFarmer" method="post">
-                <div class="mb-3">
-                    <label asp-for="name" class="form-label">First Name</label>
-                    <input asp-for="name" class="form-control" />
-                    <span asp-validation-for="name" class="text-danger"></span>
-                </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="surname" class="form-label">Last Name</label>
+                            <input asp-for="surname" class="form-control" />
+                            <span asp-validation-for="surname" class="text-danger"></span>
+                        </div>
 
-                <div class="mb-3">
-                    <label asp-for="surname" class="form-label">Last Name</label>
-                    <input asp-for="surname" class="form-control" />
-                    <span asp-validation-for="surname" class="text-danger"></span>
-                </div>
+                        <div class="col-md-12 mb-3">
+                            <label asp-for="email" class="form-label">Email</label>
+                            <input asp-for="email" class="form-control" />
+                            <span asp-validation-for="email" class="text-danger"></span>
+                        </div>
 
-                <div class="mb-3">
-                    <label asp-for="email" class="form-label">Email</label>
-                    <input asp-for="email" class="form-control" />
-                    <span asp-validation-for="email" class="text-danger"></span>
-                </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="password" class="form-label">Password</label>
+                            <input asp-for="password" class="form-control" type="password" />
+                            <span asp-validation-for="password" class="text-danger"></span>
+                        </div>
 
-                <div class="mb-3">
-                    <label asp-for="password" class="form-label">Password</label>
-                    <input asp-for="password" class="form-control" type="password" />
-                    <span asp-validation-for="password" class="text-danger"></span>
-                </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="phoneNumber" class="form-label">Phone Number</label>
+                            <input asp-for="phoneNumber" class="form-control" />
+                            <span asp-validation-for="phoneNumber" class="text-danger"></span>
+                        </div>
 
-                <div class="mb-3">
-                    <label asp-for="phoneNumber" class="form-label">Phone Number</label>
-                    <input asp-for="phoneNumber" class="form-control" />
-                    <span asp-validation-for="phoneNumber" class="text-danger"></span>
-                </div>
-
-                <!-- Hidden field to set role to Farmer -->
-                <input type="hidden" asp-for="role" value="Farmer" />
-
-                <button type="submit" class="btn btn-success w-100">Create Farmer</button>
-            </form>
+                        <input type="hidden" asp-for="role" value="Farmer" />
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a asp-controller="Home" asp-action="Index" class="btn">Cancel</a>
+                        <button type="submit" class="btn">Create Farmer</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }
+<!--OpenAI.2024. Chat-GPT(Version 3.5).[Large language model]. Available at: https://chat.openai.com/[Accessed: 13 May 2025]. -->

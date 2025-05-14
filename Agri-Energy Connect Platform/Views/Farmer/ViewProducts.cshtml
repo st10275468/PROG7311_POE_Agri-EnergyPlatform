@@ -1,16 +1,14 @@
 ﻿@model List<Agri_Energy_Connect_Platform.Models.Product>
+
 @{
     ViewData["Title"] = "My Products";
 }
 
-
-
 <div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>My Products</h2>
-        <a class="btn btn-success" href="@Url.Action("AddProduct", "Farmer")">Add New Product</a>
+    <div class="text-center mb-4">
+        <h1 class="mb-3">My Products</h1>
+        <a class="btn" href="@Url.Action("AddProduct", "Farmer")">➕ Add New Product</a>
     </div>
-
     @if (Model == null || !Model.Any())
     {
         <div class="alert alert-info text-center">
@@ -24,23 +22,25 @@
             {
                 <div class="col-lg-4 col-md-6 col-sm-12 mb-4 d-flex">
                     <div class="card shadow product-card w-100">
-                        <div class="card-body text-center">
+                        <div class="card-body">
                             <h5 class="card-title">@product.productName</h5>
-                           <p class="card-text"><strong>Price:</strong> R @product.price.ToString("F2")</p>
+                            <p><strong>Category:</strong> @product.category</p>
+                            <p><strong>Description:</strong> @product.description</p>
+                            <p><strong>Price:</strong> R @product.price.ToString("F2")</p>
+                            <p><strong>Production Date:</strong> @product.CreatedDate?.ToString("yyyy-MM-dd")</p>
                         </div>
-
-                        <!-- Image below details -->
                         @if (!string.IsNullOrEmpty(product.ImageUrl))
                         {
-                            <img src="@product.ImageUrl" alt="@product.productName" class="product-image" />
+                            <img src="@product.ImageUrl" class="product-image" alt="Product Image" />
                         }
                         else
                         {
-                            <img src="/images/placeholder.png" alt="No image" class="product-image" />
+                            <div class="text-center text-muted mb-2">
+                                <small>No image available</small>
+                            </div>
                         }
-
-                        <div class="card-footer bg-transparent border-top-0 text-center">
-                            <a class="btn btn-sm btn-primary" href="@Url.Action("ProductDetails", "Farmer", new { id = product.productID })">
+                        <div class="card-footer bg-transparent border-top-0">
+                            <a class="btn w-100" href="@Url.Action("ProductDetails", "Farmer", new { id = product.productID })">
                                 View Product Details
                             </a>
                         </div>
@@ -50,3 +50,4 @@
         </div>
     }
 </div>
+<!--OpenAI.2024. Chat-GPT(Version 3.5).[Large language model]. Available at: https://chat.openai.com/[Accessed: 13 May 2025]. -->

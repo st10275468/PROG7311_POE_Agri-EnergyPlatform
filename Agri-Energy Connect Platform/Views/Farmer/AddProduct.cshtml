@@ -5,66 +5,72 @@
 }
 
 <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-sm-12">
-            <div class="card shadow-lg">
-                <div class="card-body">
-                    <h3 class="text-center mb-4">Add New Product</h3>
-
-                    <form method="post" asp-action="AddProduct" asp-controller="Farmer" enctype="multipart/form-data">
-                        @Html.AntiForgeryToken()
-                        <div class="mb-3">
-                            <label asp-for="productName" class="form-label"></label>
+    <div class="form-wrapper">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h3 class="text-center mb-4">Add New Product</h3>
+                @if (ViewBag.SuccessMessage != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        @ViewBag.SuccessMessage
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+                <form method="post" asp-action="AddProduct" asp-controller="Farmer" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="productName" class="form-label">Product Name</label>
                             <input asp-for="productName" class="form-control" />
                             <span asp-validation-for="productName" class="text-danger"></span>
                         </div>
-
-                        <div class="mb-3">
-                            
-                           <label asp-for="category" class="form-label"></label>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="category" class="form-label">Category</label>
                             <select asp-for="category" class="form-control">
                                 <option value="" selected disabled>Select a Category</option>
                                 <option value="Solar Solutions">Solar Solutions</option>
-                                <option value="Wind Energy">Wind Energy</option>
-                                <option value="Biogas">Biogas</option>
-                                <option value="Water Conservation">Water Conservation</option>
+                                <option value="Wind Energy Solutions">Wind Energy Solutions</option>
+                                <option value="Biogas Systems">Biogas Systems</option>
+                                <option value="Irrigation Tools">Irrigation Tools</option>
                                 <option value="Organic Farming">Organic Farming</option>
-                                <option value="Sustainable Equipment">Sustainable Equipment</option>
+                                <option value="Smart Farming Devices">Smart Farming Devices</option>
+                                <option value="Green Energy Services">Green Energy Services</option>
+                                <option value="Educational Resources">Educational Resources</option>
+                                <option value="Machinery">Machinery</option>
                             </select>
-                              <span asp-validation-for="category" class="text-danger"></span>
+                            <span asp-validation-for="category" class="text-danger"></span>
                         </div>
-
-
-                        <div class="mb-3">
-                            <label asp-for="description" class="form-label"></label>
+                        <div class="col-md-12 mb-3">
+                            <label asp-for="description" class="form-label">Description</label>
                             <textarea asp-for="description" class="form-control" rows="3"></textarea>
                             <span asp-validation-for="description" class="text-danger"></span>
                         </div>
-
-                        <div class="mb-3">
-                            <label asp-for="price" class="form-label"></label>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="price" class="form-label">Price (ZAR)</label>
                             <input asp-for="price" class="form-control" step="0.01" />
                             <span asp-validation-for="price" class="text-danger"></span>
                         </div>
-                        <div class="mb-3">
+                        <div class="col-md-6 mb-3">
                             <label asp-for="CreatedDate" class="form-label">Production Date</label>
                             <input asp-for="CreatedDate" class="form-control" type="date" />
                             <span asp-validation-for="CreatedDate" class="text-danger"></span>
                         </div>
-                        <div class="mb-3">
+                        <div class="col-md-12 mb-3">
                             <label for="ProductImage" class="form-label">Product Image (optional)</label>
                             <input type="file" class="form-control" name="productImage" accept="image/*" />
                         </div>
-                        <button type="submit" class="btn btn-success w-100">Add Product</button>
-                    </form>
-                </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a asp-controller="Farmer" asp-action="ViewProducts" class="btn">Cancel</a>
+                        <button type="submit" class="btn">Add Product</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }
+<!--OpenAI.2024. Chat-GPT(Version 3.5).[Large language model]. Available at: https://chat.openai.com/[Accessed: 13 May 2025]. -->

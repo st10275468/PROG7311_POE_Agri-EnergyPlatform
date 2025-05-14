@@ -21,8 +21,6 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                       
-                       
                         @if (Context.Session.GetString("UserRole") == "Employee")
                         {
                             <li class="nav-item">
@@ -31,17 +29,12 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Employee" asp-action="ViewFarmerProducts">Products</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Employee" asp-action="ViewAllFarmers">Farmers</a>
-                            </li>
-
                         }
                         @if (Context.Session.GetString("UserRole") == "Farmer")
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Farmer" asp-action="ViewProducts">My Products</a>
                             </li>
-                           
                         }
                         <li class="nav-item">
                             @if (Context.Session.GetString("UserID") != null)
@@ -76,3 +69,4 @@
     </script>
 </body>
 </html>
+<!--OpenAI.2024. Chat-GPT(Version 3.5).[Large language model]. Available at: https://chat.openai.com/[Accessed: 13 May 2025]. -->

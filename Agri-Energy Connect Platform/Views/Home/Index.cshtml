@@ -8,24 +8,31 @@
     <div class="row justify-content-center">
         <h1 class="text-center mb-4">Agri-Energy Connect Platform</h1>
         <div class="col-md-6 col-sm-12">
-
             @if (string.IsNullOrEmpty(userID))
             {
+                <div class="login-card-wrapper">
                 <div class="card shadow-lg">
                     <div class="card-body">
                         <h3 class="text-center mb-4">Login</h3>
+                            @if (TempData["LoginError"] != null)
+                            {
+                                <div class="alert alert-danger">
+                                    @TempData["LoginError"]
+                                </div>
+                            }
                         <form method="post" action="@Url.Action("Login", "Account")">
                             <div class="mb-3">
                                 <label>Email</label>
-                                <input type="email" name="Email" value="Employee@gmail.com" class="form-control" required />
+                                <input type="email" name="Email" class="form-control" required />
                             </div>
                             <div class="mb-3">
                                 <label>Password</label>
-                                <input type="password" name="Password" value="password" class="form-control" required />
+                                <input type="password" name="Password"  class="form-control" required />
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Login</button>
+                            <button type="submit" class="btn w-100">Login</button>
                         </form>
                     </div>
+                </div>
                 </div>
             }
             
@@ -33,25 +40,38 @@
             {
                 @if (userRole == "Employee")
                 {
-                    <!-- Employee's Home Page -->
                     <div class="card shadow-lg">
                         <div class="card-body text-center">
-                            <h4>Welcome, as an employee you can...</h4>
-                            <p>This area can be used for dashboard content.</p>
-                            <!-- Add links for employee features -->
-                            <a href="@Url.Action("AddFarmer", "Employee")" class="btn">Add a Farmer</a>
+                            <h3 class="mb-3">Welcome!</h3>
+                            <p class="mb-4">As an employee, you have access to the following features:</p>
+
+                            <div class="d-grid gap-3">
+                                <a href="@Url.Action("AddFarmer", "Employee")" class="btn">
+                                    Add a Farmer
+                                </a>
+                                <a href="@Url.Action("ViewFarmerProducts", "Employee")" class="btn">
+                                    View Farmer Products
+                                </a>
+                                
+                            </div>
                         </div>
                     </div>
                 }
                 else if (userRole == "Farmer")
                 {
-                    <!-- Farmer's Home Page -->
                     <div class="card shadow-lg">
                         <div class="card-body text-center">
-                            <h4>Welcome, as a farmer yoyu can</h4>
-                            <p>This area can be used for farmer-specific content.</p>
-                            <!-- Add links for farmer features -->
-                            <a href="@Url.Action("AddProduct", "Farmer")" class="btn btn-primary">Add a Product</a>
+                            <h3 class="mb-3">Welcome!</h3>
+                            <p class="mb-4">As a farmer, you have access to the following features:</p>
+
+                            <div class="d-grid gap-3">
+                                <a href="@Url.Action("AddProduct", "Farmer")" class="btn">
+                                    Add a Product
+                                </a>
+                                <a href="@Url.Action("ViewProducts", "Farmer")" class="btn">
+                                    View Your Products
+                                </a>
+                            </div>
                         </div>
                     </div>
                 }
@@ -59,3 +79,4 @@
         </div>
     </div>
 </div>
+<!--OpenAI.2024. Chat-GPT(Version 3.5).[Large language model]. Available at: https://chat.openai.com/[Accessed: 13 May 2025]. -->

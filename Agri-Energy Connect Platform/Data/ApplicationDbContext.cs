@@ -15,8 +15,7 @@ namespace Agri_Energy_Connect_Platform.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            //Creating an employee user in the database
+            //Creating a employee for the database
             var passwordHasher = new PasswordHasher<User>();
             var employee = new User
             {
@@ -38,3 +37,4 @@ namespace Agri_Energy_Connect_Platform.Data
     }
 
 }
+/*OpenAI.2024. Chat-GPT(Version 3.5).[Large language model]. Available at: https://chat.openai.com/[Accessed: 13 May 2025]. */
